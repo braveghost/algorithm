@@ -1,6 +1,8 @@
 package main
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // todo 并发安全 	atomic.XXX
 
@@ -95,8 +97,29 @@ func (l *Lru) Val(key string) (interface{}, bool) {
 	if !ok {
 		return nil, false
 	}
+	l.setStart(v)
+
 	return v.Value(), true
 }
+
+
+func (l *Lru) setStart(node INode) {
+
+	if reflect.DeepEqual(l.start, node){
+		return
+	}
+	if reflect.DeepEqual(l.end,node){
+		l.Del()
+		l.Put(node)
+	}else {
+		node.Prev().SetNext(node.Next())
+		node.Next().SetPrev(node.Prev())
+		l.put(node)
+	}
+}
+
+
+
 
 func NewLru(maxLen uint64) ILruCache {
 	if maxLen < 1 {
@@ -113,7 +136,7 @@ func (l *Lru) End() (INode, bool) {
 	return l.end, l.end != nil
 }
 
-func (l *Lru) Put(n INode) {
+func (l *Lru) put(n INode) bool{
 	l.cache[n.Key()] = n
 	if l.start == nil || l.maxLen == 1 {
 		n.SetNext(n)
@@ -121,7 +144,7 @@ func (l *Lru) Put(n INode) {
 		l.start = n
 		l.end = n
 		l.currentLen = 1
-		return
+		return false
 	}
 
 	old := l.start
@@ -136,9 +159,18 @@ func (l *Lru) Put(n INode) {
 
 	old.SetPrev(n)
 	n.SetNext(old)
+	n.SetPrev(nil)
 	l.start = n
-	l.currentLen += 1
+	return true
 }
+
+
+func (l *Lru) Put(n INode) {
+	if l.put(n){
+		l.currentLen += 1
+	}
+}
+
 
 func (l *Lru) Del() {
 	if l.end != nil {
@@ -155,7 +187,6 @@ func (l *Lru) Del() {
 			if reflect.DeepEqual(l.start, l.end) {
 				l.start.SetPrev(l.start)
 				l.start.SetNext(l.start)
-
 			}
 		}
 		l.currentLen -= 1
