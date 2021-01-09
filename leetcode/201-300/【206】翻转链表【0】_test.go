@@ -8,6 +8,11 @@ func TestReverseList(t *testing.T) {
 	type args struct {
 		head *ListNode
 	}
+	l1 := &ListNode{
+		Val:  45,
+		Next: nil,
+	}
+	l1.Next = l1
 	tests := []struct {
 		name string
 		args args
@@ -21,6 +26,19 @@ func TestReverseList(t *testing.T) {
 					Next: &ListNode{
 						Val:  3,
 						Next: nil,
+					},
+				},
+			}},
+		},
+		{
+			name: "test-2",
+			args: args{head: &ListNode{
+				Val: 1,
+				Next: &ListNode{
+					Val: 2,
+					Next: &ListNode{
+						Val:  3,
+						Next: l1,
 					},
 				},
 			}},
@@ -41,6 +59,7 @@ func TestReverseList_Recursive(t *testing.T) {
 	type args struct {
 		head *ListNode
 	}
+
 	tests := []struct {
 		name string
 		args args
