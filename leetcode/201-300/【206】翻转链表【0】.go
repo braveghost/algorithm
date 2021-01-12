@@ -47,7 +47,7 @@ type ListNode struct {
 //leetcode submit region end(Prohibit modification and deletion)
 func ReverseList(head *ListNode) *ListNode {
 
-	var pre *ListNode
+	var pre *ListNode // next
 	cur := head
 	for cur != nil {
 		cur, cur.Next, pre = cur.Next, pre, cur
@@ -65,3 +65,4 @@ func ReverseList_Recursive(head *ListNode) *ListNode {
 
 	return cur
 }
+

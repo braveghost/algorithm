@@ -25,24 +25,25 @@ func TestReverseList(t *testing.T) {
 					Val: 2,
 					Next: &ListNode{
 						Val:  3,
-						Next: nil,
+						Next: &ListNode{
+							Val:  4,
+							Next: nil,
+						},
 					},
 				},
 			}},
-		},
+		},	
 		{
 			name: "test-2",
 			args: args{head: &ListNode{
 				Val: 1,
 				Next: &ListNode{
 					Val: 2,
-					Next: &ListNode{
-						Val:  3,
-						Next: l1,
-					},
+					Next:l1,
 				},
 			}},
 		},
+
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -51,6 +52,7 @@ func TestReverseList(t *testing.T) {
 			t.Log(got.Next)
 			t.Log(got.Next.Next)
 			t.Log(got.Next.Next.Next)
+			t.Log(got.Next.Next.Next.Next)
 		})
 	}
 }

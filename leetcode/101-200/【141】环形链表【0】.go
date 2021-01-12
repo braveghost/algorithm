@@ -54,7 +54,6 @@ package _01_200
 // Related Topics 链表 双指针
 // 👍 901 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * Definition for singly-linked list.
@@ -64,27 +63,41 @@ package _01_200
  * }
  */
 
-
 type ListNode struct {
 	Val  int
 	Next *ListNode
 }
 
-
 func HasCycle(head *ListNode) bool {
-	if head == nil || head.Next == nil{
+	if head == nil || head.Next == nil {
 		return false
 	}
 
-	one,two := head, head
-	for two != nil && two.Next != nil{
+	one, two := head, head
+	for two != nil && two.Next != nil {
 		one = one.Next
 		two = two.Next.Next
-		if one == two{
+		if one == two {
 			return true
 		}
 
 	}
 	return false
 }
-//leetcode submit region end(Prohibit modification and deletion)
+
+func HasCycle_Flip(head *ListNode) bool {
+	if head == nil || head.Next == nil {
+		return false
+	}
+	return head == reverseList(head)
+}
+
+func reverseList(head *ListNode) *ListNode {
+
+	var pre *ListNode
+	cur := head
+	for cur != nil {
+		cur, cur.Next, pre = cur.Next, pre, cur
+	}
+	return pre
+}
