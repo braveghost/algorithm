@@ -66,12 +66,10 @@ func LevelOrder(root *TreeNode) [][]int {
 
 
 func LevelOrder_Iter(root *TreeNode) [][]int {
-
 	if root == nil{
 		return nil
 	}
 	var res [][]int
-
 	layer:= []*TreeNode{root}
 	 for len(layer) > 0{
 		 var list []int
