@@ -1,4 +1,5 @@
 package _01_200
+
 //给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
 //
 //
@@ -53,7 +54,6 @@ package _01_200
 // Related Topics 栈 树
 // 👍 491 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * Definition for a binary tree node.
@@ -64,11 +64,10 @@ package _01_200
  * }
  */
 
-
 type TreeNode struct {
-     Val int
- Left *TreeNode
-	   Right *TreeNode
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 func PreorderTraversal(root *TreeNode) []int {
@@ -85,14 +84,15 @@ func PreorderTraversal(root *TreeNode) []int {
 	preorder(root)
 	return res
 }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 func PreorderTraversal_Iter(root *TreeNode) []int {
 
 	var stack []*TreeNode
 	var res []int
-	for root != nil || len(stack) > 0{
-		for root != nil{
+	for root != nil || len(stack) > 0 {
+		for root != nil {
 			res = append(res, root.Val)
 			stack = append(stack, root.Right)
 			root = root.Left
@@ -102,4 +102,5 @@ func PreorderTraversal_Iter(root *TreeNode) []int {
 	}
 	return res
 }
+
 //leetcode submit region end(Prohibit modification and deletion)
