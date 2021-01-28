@@ -34,7 +34,7 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 		return nil
 	}
 	root := &TreeNode{Val: preorder[0]}
-	i := 0
+	var i int
 	for i = range inorder {
 		if inorder[i] == root.Val {
 			break
@@ -43,7 +43,6 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	root.Left = buildTree(preorder[1:i+1], inorder[:i])
 	root.Right = buildTree(preorder[i+1:], inorder[i+1:])
 	return root
-
 }
 
 // todo 迭代法
