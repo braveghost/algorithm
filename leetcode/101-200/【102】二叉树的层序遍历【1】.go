@@ -28,7 +28,54 @@ package _01_200
 // 👍 748 👎 0
 
 
-//leetcode submit region begin(Prohibit modification and deletion)
+func LevelOrder_DFS(root *TreeNode) [][]int {
+	var res = [][]int{}
+
+	var dfs func(layer int, node *TreeNode)
+
+	dfs = func(layer int, node *TreeNode) {
+		if node == nil{
+			return
+		}
+		if len(res) <= layer{
+			res = append(res, []int{})
+		}
+		res[layer] = append(res[layer], node.Val)
+		dfs(layer+1, node.Left)
+		dfs(layer+1, node.Right)
+	}
+
+	dfs(0, root)
+	return  res
+
+}
+func LevelOrder_2(root *TreeNode) [][]int {
+	if root == nil{
+		return nil
+	}
+	var res [][]int
+	queue := []*TreeNode{root}
+	length := len(queue)
+
+	for length> 0{
+	 	var line []int
+	 	for i:= 0;i<length;i++{
+	 		v := queue[i]
+			line = append(line, v.Val)
+			if v.Left != nil{
+				queue = append(queue,v.Left)
+			}
+			if v.Right != nil{
+				queue = append(queue, v.Right)
+			}
+		}
+		queue = queue[:length]
+		length = len(queue)
+
+	 }
+	return res
+}
+
 
 func LevelOrder(root *TreeNode) [][]int {
 	if root == nil{
